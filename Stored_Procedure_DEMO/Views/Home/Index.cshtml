@@ -3,9 +3,8 @@
 }
 @model System.Data.DataTable
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
     <h1>Employees List</h1>
-    <table border="1">
+    <table class="table" border="1">
         <thead>
             <tr>
                 @foreach (System.Data.DataColumn column in Model.Columns)
@@ -26,4 +25,26 @@
             }
         </tbody>
     </table>
+
+    <form method="POST" action="/Home/AddEmployee">
+        <label for="name">姓名</label>
+        <input type="text" id="name" name="name"/>
+        <label for="salary">薪水</label>
+        <input type="number" id="salary" name="salary" />
+        <button type="submit" class="btn btn-dark">新增</button>
+    </form>
+    <form method="POST" action="/Home/UpdateEmployee">
+        <label for="id">員工編號</label>
+        <input type="text" id="id" name="id" />
+        <label for="name">姓名</label>
+        <input type="text" id="name" name="name" />
+        <label for="salary">薪水</label>
+        <input type="number" id="salary" name="salary" />
+        <button type="submit" class="btn btn-dark">修改</button>
+    </form>
+    <form method="POST" action="/Home/DeleteEmployee">
+        <label for="id">員工編號</label>
+        <input type="text" id="id" name="id" />
+        <button type="submit" class="btn btn-dark">刪除</button>
+    </form>
 </div>

@@ -109,5 +109,33 @@ namespace Stored_Procedure_DEMO
                 }
             }
         }
+        public int ExecuteStoredProcedure_Status(string procedureName, params SqlParameter[] parameters)
+        {
+            using (var connection = GetConnection())
+            {
+                using (var command = new SqlCommand(procedureName, connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    // 添加返回值參數
+                    var returnParameter = new SqlParameter
+                    {
+                        ParameterName = "@RETURN_VALUE",
+                        SqlDbType = SqlDbType.Int,
+                        Direction = ParameterDirection.ReturnValue
+                    };
+                    command.Parameters.Add(returnParameter);
+
+                    // 添加其他參數
+                    command.Parameters.AddRange(parameters);
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+
+                    // 返回預存程序的 RETURN 值
+                    return (int)returnParameter.Value;
+                }
+            }
+        }
     }
 }
